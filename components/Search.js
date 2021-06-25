@@ -87,7 +87,8 @@ class Search extends React.Component {
           onEndReachedThreshold={0.5}
           onEndReached={() => {
             if (this.page < this.totalPages) {
-              this._loadFilms();
+              // this._loadFilms();
+              console.log("Ok fin atteinte")
             }
           }}
         />
