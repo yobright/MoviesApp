@@ -2,15 +2,34 @@
 
 import React from 'react'
 import { StyleSheet, View, Text, Image, Pressable } from 'react-native'
+import { connect } from 'react-redux'
+
+
+
 
 class FilmItem extends React.Component {
-  render() {
-    
+
+  
+
+  getFavorite = () => {
+    var favoriteIndicator = ''
+    if (this.props.favoritesFilm.findIndex(item => item.id === this.props.film.id) !== -1) {
+      favoriteIndicator = require('../images/favorite_icone.png') 
+    }
+    return <Image 
+        source={favoriteIndicator}
+        style={styles.favoriteIndicator}
+       />
+  }
+
+
+  render() {  
      return (
       <Pressable 
         style={styles.main_container}
-        onPress={() => this.props.displayFilmDetail(this.props.film.id)}
-        >  
+        onPress={() => 
+          this.props.displayFilmDetail(this.props.film.id)
+        }>  
       
         <Image
           style={styles.image}
@@ -18,6 +37,7 @@ class FilmItem extends React.Component {
         />
         <View style={styles.content_container}>
           <View style={styles.header_container}>
+            <View>{this.getFavorite()}</View>
             <Text style={styles.title_text} numberOfLines={2} > {this.props.film.title} </Text>
             <Text style={styles.vote_text}> {this.props.film.vote_average} </Text>
           </View>
@@ -42,7 +62,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 180,
     margin: 5,
-    backgroundColor: 'gray'
+   
   },
   content_container: {
     flex: 1,
@@ -77,7 +97,17 @@ const styles = StyleSheet.create({
   date_text: {
     textAlign: 'right',
     fontSize: 14
+  }, 
+  favoriteIndicator: {
+    width: 40,
+    height: 40
   }
 })
 
-export default FilmItem
+const mapStateToProps = (state) => {
+  return {
+    favoritesFilm: state.favoritesFilm
+  }
+}
+
+export default connect(mapStateToProps)(FilmItem)

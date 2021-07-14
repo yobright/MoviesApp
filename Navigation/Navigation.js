@@ -23,7 +23,7 @@ export default function Navigation() {
     return (
         <NavigationContainer>
             <Stack.Navigator 
-            initialRouteName="Home" 
+            initialRouteName="Recherche" 
             screenOptions={{  }}
             >
                 <Stack.Screen name="Recherche" component={Search} />

@@ -24,8 +24,9 @@ class Search extends React.Component {
   }
 
   _displayFilmDetail = (idFilm) => {
-    console.log("display film with id " + idFilm)
-  }
+    this.props.navigation.navigate('FilmDetail', { idFilm: idFilm})
+  };
+
 
   _loadFilms() {
     if (this.searchedText.length > 0) {
@@ -38,6 +39,7 @@ class Search extends React.Component {
           //  Notre but ici est d'ajouter les films à ceux que l'on a déjà récupérés ou films: this.state.films.concat(data.results)
           isLoading: false,
         });
+        
       });
     }
   }
@@ -78,29 +80,31 @@ class Search extends React.Component {
           style={styles.textinput}
           onChangeText={(text) => this._onChangeText(text)}
           onSubmitEditing={() => this._searchFilms()}
-        />
-        <Button title="Rechercher" onPress={() => this._searchFilms()} />
+        />{" "}
+        <Button title="Rechercher" onPress={() => this._searchFilms()} />{" "}
         <FlatList
           data={this.state.films}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <FilmItem film={item} displayFilmDetail={this._displayFilmDetail} />}
+          renderItem={({ item }) => (
+            <FilmItem film={item} displayFilmDetail={this._displayFilmDetail} />
+          )}
           onEndReachedThreshold={0.5}
           onEndReached={() => {
             if (this.page < this.totalPages) {
               // this._loadFilms();
-              console.log("Ok fin atteinte")
+              console.log("Ok fin atteinte");
             }
           }}
-        />
-        {this._displayLoading()}
+        />{" "}
+        {this._displayLoading()}{" "}
       </View>
     );
-  } 
+  }
 }
 
 const styles = StyleSheet.create({
   main_container: {
-    flex: 1
+    flex: 1,
   },
   textinput: {
     marginLeft: 5,
